@@ -1,0 +1,79 @@
+{
+  "fonte": "Médias BCB abril/2026 — creditas.com, idinheiro.com.br, verificarauto.com.br",
+  "atualizadoEm": "2026-04-26",
+  "observacaoGeral": "Taxas médias praticadas (base BCB). Clientes correntistas/Prime podem obter taxas promocionais menores.",
+  "bancos": [
+    {
+      "id": 1,
+      "banco": "Bradesco",
+      "taxaMensal": 1.74,
+      "prazoMaximo": 60,
+      "entradaMinima": 20,
+      "observacao": "Taxas competitivas para correntistas Prime/Exclusive"
+    },
+    {
+      "id": 2,
+      "banco": "Inter",
+      "taxaMensal": 1.75,
+      "prazoMaximo": 60,
+      "entradaMinima": 20,
+      "observacao": "Operação 100% digital"
+    },
+    {
+      "id": 3,
+      "banco": "Sicoob",
+      "taxaMensal": 1.76,
+      "prazoMaximo": 60,
+      "entradaMinima": 20,
+      "observacao": "Cooperativa de crédito"
+    },
+    {
+      "id": 4,
+      "banco": "Banco do Brasil",
+      "taxaMensal": 1.84,
+      "prazoMaximo": 60,
+      "entradaMinima": 20,
+      "observacao": ""
+    },
+    {
+      "id": 5,
+      "banco": "Santander",
+      "taxaMensal": 1.87,
+      "prazoMaximo": 48,
+      "entradaMinima": 30,
+      "observacao": "Exige entrada de 30%; taxa promocional a partir de 1,29%"
+    },
+    {
+      "id": 6,
+      "banco": "Caixa Econômica",
+      "taxaMensal": 1.97,
+      "prazoMaximo": 60,
+      "entradaMinima": 20,
+      "observacao": ""
+    },
+    {
+      "id": 7,
+      "banco": "Itaú",
+      "taxaMensal": 2.12,
+      "prazoMaximo": 48,
+      "entradaMinima": 30,
+      "observacao": "Taxa especial p/ elétricos a partir de 8,73% a.a."
+    },
+    {
+      "id": 8,
+      "banco": "BV Financeira",
+      "taxaMensal": 2.19,
+      "prazoMaximo": 60,
+      "entradaMinima": 20,
+      "observacao": "Forte em seminovos; promocional pode chegar a 1,14%"
+    },
+    {
+      "id": 9,
+      "banco": "Banco Pan",
+      "taxaMensal": 2.96,
+      "prazoMaximo": 72,
+      "entradaMinima": 10,
+      "observacao": "Aceita perfis com restrição"
+    }
+  ]
+}

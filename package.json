@@ -1,0 +1,13 @@
+{
+  "name": "simulador-financiamento-veiculo",
+  "version": "1.0.0",
+  "description": "Simulador de financiamento de veículos com CRUD de taxas por banco",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.19.2"
+  }
+}

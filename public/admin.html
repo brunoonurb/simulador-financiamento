@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gerenciar Taxas — Simulador</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>⚙️ Gerenciar Taxas</h1>
+      <nav>
+        <a href="index.html">Simulador</a>
+        <a href="admin.html" class="active">Gerenciar Taxas</a>
+      </nav>
+    </header>
+
+    <div class="card">
+      <h2 id="form-titulo">Adicionar banco</h2>
+      <form id="form-banco">
+        <input type="hidden" id="bancoId">
+        <div class="form-grid">
+          <div>
+            <label>Banco *</label>
+            <input type="text" id="banco" placeholder="Ex.: Santander" required>
+          </div>
+          <div>
+            <label>Taxa mensal (%) *</label>
+            <input type="number" id="taxaMensal" step="0.01" min="0" placeholder="Ex.: 1.29" required>
+          </div>
+          <div>
+            <label>Prazo máximo (meses) *</label>
+            <input type="number" id="prazoMaximo" min="1" placeholder="Ex.: 60" required>
+          </div>
+          <div>
+            <label>Entrada mínima (%) *</label>
+            <input type="number" id="entradaMinima" min="0" max="100" placeholder="Ex.: 20" required>
+          </div>
+          <div style="grid-column: 1/-1">
+            <label>Observação</label>
+            <input type="text" id="observacao" placeholder="Opcional">
+          </div>
+        </div>
+        <div class="btn-row">
+          <button type="submit" class="btn-primary" id="btn-salvar">Salvar</button>
+          <button type="button" class="btn-secondary" id="btn-cancelar" style="display:none">Cancelar</button>
+        </div>
+      </form>
+    </div>
+
+    <div class="card">
+      <h2>Bancos cadastrados</h2>
+      <div style="overflow-x:auto">
+        <table>
+          <thead>
+            <tr>
+              <th>Banco</th>
+              <th>Taxa a.m.</th>
+              <th>Prazo máx.</th>
+              <th>Entrada mín.</th>
+              <th>Observação</th>
+              <th>Ações</th>
+            </tr>
+          </thead>
+          <tbody id="tbody-bancos"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <script src="admin.js"></script>
+</body>
+</html>

@@ -1,0 +1,243 @@
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+  min-height: 100vh;
+  color: #1f2937;
+  padding: 20px;
+}
+
+.container {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: white;
+  padding: 18px 24px;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+  margin-bottom: 24px;
+}
+
+header h1 {
+  font-size: 22px;
+  color: #1e3a8a;
+}
+
+nav a {
+  margin-left: 16px;
+  color: #3b82f6;
+  text-decoration: none;
+  font-weight: 600;
+  padding: 8px 14px;
+  border-radius: 8px;
+  transition: background 0.2s;
+}
+
+nav a:hover, nav a.active {
+  background: #dbeafe;
+}
+
+.card {
+  background: white;
+  padding: 24px;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+  margin-bottom: 20px;
+}
+
+.card h2 {
+  color: #1e3a8a;
+  margin-bottom: 16px;
+  font-size: 18px;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+}
+
+label {
+  display: block;
+  font-size: 13px;
+  font-weight: 600;
+  color: #4b5563;
+  margin-bottom: 6px;
+}
+
+input, textarea {
+  width: 100%;
+  padding: 10px 12px;
+  border: 2px solid #e5e7eb;
+  border-radius: 8px;
+  font-size: 15px;
+  transition: border-color 0.2s;
+}
+
+input:focus, textarea:focus {
+  outline: none;
+  border-color: #3b82f6;
+}
+
+button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-primary {
+  background: #3b82f6;
+  color: white;
+}
+
+.btn-primary:hover { background: #2563eb; }
+
+.btn-secondary {
+  background: #e5e7eb;
+  color: #374151;
+}
+
+.btn-secondary:hover { background: #d1d5db; }
+
+.btn-danger {
+  background: #ef4444;
+  color: white;
+}
+
+.btn-danger:hover { background: #dc2626; }
+
+.btn-row {
+  margin-top: 16px;
+  display: flex;
+  gap: 10px;
+}
+
+.melhor-banco {
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  color: white;
+  padding: 24px;
+  border-radius: 12px;
+  margin-bottom: 16px;
+}
+
+.melhor-banco h3 {
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  opacity: 0.9;
+  margin-bottom: 8px;
+}
+
+.melhor-banco .nome {
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 12px;
+}
+
+.melhor-banco .grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 16px;
+  margin-top: 12px;
+}
+
+.melhor-banco .item .label {
+  font-size: 12px;
+  opacity: 0.85;
+  text-transform: uppercase;
+}
+
+.melhor-banco .item .value {
+  font-size: 18px;
+  font-weight: 700;
+  margin-top: 4px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th, td {
+  padding: 12px;
+  text-align: left;
+  border-bottom: 1px solid #e5e7eb;
+  font-size: 14px;
+}
+
+th {
+  background: #f3f4f6;
+  font-weight: 600;
+  color: #374151;
+  font-size: 12px;
+  text-transform: uppercase;
+}
+
+tr.inelegivel {
+  opacity: 0.5;
+  background: #fef2f2;
+}
+
+tr.melhor {
+  background: #ecfdf5;
+}
+
+.badge {
+  display: inline-block;
+  padding: 3px 8px;
+  border-radius: 12px;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.badge-ok { background: #d1fae5; color: #065f46; }
+.badge-erro { background: #fee2e2; color: #991b1b; }
+.badge-melhor { background: #fbbf24; color: #78350f; }
+
+.actions {
+  display: flex;
+  gap: 6px;
+}
+
+.actions button {
+  padding: 6px 12px;
+  font-size: 12px;
+}
+
+.empty {
+  text-align: center;
+  padding: 40px;
+  color: #9ca3af;
+}
+
+.alerta {
+  background: #fef3c7;
+  border-left: 4px solid #f59e0b;
+  padding: 12px 16px;
+  border-radius: 6px;
+  margin-bottom: 16px;
+  color: #78350f;
+  font-size: 14px;
+}
+
+.fonte {
+  text-align: center;
+  color: rgba(255,255,255,0.85);
+  font-size: 12px;
+  margin-top: 20px;
+}
+
+@media (max-width: 600px) {
+  table { font-size: 12px; }
+  th, td { padding: 8px; }
+}
