@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Diagramas Mermaid — Motorhome Doblò Slide-Out</title>
+  <link rel="stylesheet" href="/motorhome-slide/styles.css">
+  <style>
+    .card {
+      background: #fff;
+      border-radius: 12px;
+      padding: 22px;
+      box-shadow: 0 2px 8px rgba(0,0,0,.06);
+      margin-bottom: 20px;
+    }
+    .card h2 { font-size: 18px; color: #0f172a; margin-bottom: 6px; }
+    .card .subtitle { font-size: 13px; color: #64748b; margin-bottom: 18px; }
+    .diagram {
+      background: #fafbfc;
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      padding: 18px;
+      display: flex;
+      justify-content: center;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+    .diagram .mermaid { background: transparent; min-width: 320px; }
+    @media (max-width: 600px) {
+      .card { padding: 16px; }
+      .diagram { padding: 10px; }
+    }
+  </style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="wrap">
+    <h1>🚐 Diagramas Mermaid <small>fluxos · slide-out · drop-floor</small></h1>
+    <nav>
+      <a href="/">Início</a>
+      <a href="/motorhome-slide/">Visão geral</a>
+      <a href="/motorhome-slide/plantas">Plantas</a>
+      <a href="/motorhome-slide/mermaid">Diagramas</a>
+      <a href="/motorhome/">← versão original</a>
+    </nav>
+  </div>
+</header>
+
+  <main style="max-width:1100px;margin:0 auto;padding:24px 16px;">
+
+    <article class="card">
+      <h2>1. Layout estrutural — modo cidade</h2>
+      <p class="subtitle">Fluxo de elementos por coluna (passageiro · corredor · motorista) da frente para a traseira.</p>
+      <div class="diagram">
+        <pre class="mermaid">
+flowchart TB
+    subgraph FRENTE["FRENTE"]
+      direction LR
+      BP["Banco Passageiro"]
+      BM["Banco Motorista"]
+    end
+
+    subgraph MEIO1[" "]
+      direction LR
+      BT["Banco Traseiro<br/>Bipartido<br/><i>(removível)</i>"]
+      C1["Corredor"]
+      AA["Armário Alto"]
+    end
+
+    subgraph MEIO2[" "]
+      direction LR
+      CX1["Caixote / Sofá<br/><i>(só lado passageiro)</i>"]
+      C2["Corredor"]
+      BF["Bancada<br/>+ Fogareiro"]
+    end
+
+    subgraph TRASEIRA["TRASEIRA"]
+      direction LR
+      CX2["Caixote (continua)"]
+      C3["Corredor<br/>(até porta traseira)"]
+      PIA["Cuba / Pia"]
+    end
+
+    FRENTE --> MEIO1 --> MEIO2 --> TRASEIRA
+
+    classDef passageiro fill:#cfd,stroke:#333
+    classDef motorista fill:#fc9,stroke:#333
+    classDef corredor fill:#f5f5f5,stroke:#999,stroke-dasharray: 4
+    classDef caixote fill:#fcc,stroke:#333
+    classDef pia fill:#cdf,stroke:#333
+    classDef bancada fill:#fda,stroke:#333
+    classDef banco fill:#dde,stroke:#333
+
+    class BP,BM banco
+    class BT passageiro
+    class AA motorista
+    class C1,C2,C3 corredor
+    class CX1,CX2 caixote
+    class BF bancada
+    class PIA pia
+        </pre>
+      </div>
+    </article>
+
+    <article class="card">
+      <h2>2. Conversão: cidade → cama</h2>
+      <p class="subtitle">O que muda na transformação para o modo viagem.</p>
+      <div class="diagram">
+        <pre class="mermaid">
+flowchart LR
+    subgraph CIDADE["MODO CIDADE"]
+      A1["Banco traseiro bipartido"]
+      A2["Caixote / Sofá"]
+      A3["Cozinha (armário + bancada + pia)"]
+      A4["Corredor livre"]
+    end
+
+    subgraph CAMA["MODO CAMA"]
+      B1["Banco traseiro REMOVIDO<br/>(piso livre)"]
+      B2["Caixote permanece<br/><b>(base da cama)</b>"]
+      B3["Cozinha INTACTA<br/>(nunca vira cama)"]
+      B4["Tábuas removíveis<br/>+ colchão sobre corredor"]
+    end
+
+    A1 -->|remover| B1
+    A2 -->|manter| B2
+    A3 -->|manter| B3
+    A4 -->|cobrir| B4
+
+    classDef cidade fill:#e8f4ff,stroke:#369
+    classDef cama fill:#fff4e1,stroke:#c80
+    class A1,A2,A3,A4 cidade
+    class B1,B2,B3,B4 cama
+        </pre>
+      </div>
+    </article>
+
+    <article class="card">
+      <h2>3. Sistema elétrico</h2>
+      <p class="subtitle">Fontes de carga, bateria auxiliar e cargas 12V / 110V.</p>
+      <div class="diagram">
+        <pre class="mermaid">
+flowchart LR
+    SOL["☀️ Placa Solar"] -->|via controlador| BAT
+    ALT["🚗 Alternador"] -->|via DC-DC| BAT
+    SHO["🔌 Tomada Comum<br/>(shore power)"] -->|via carregador| BAT
+
+    BAT["🔋 Bateria Auxiliar<br/>(deep cycle)"] --> QD12["Quadro 12V"]
+    BAT --> INV["Inversor 110V"]
+
+    QD12 --> LED["💡 LEDs internos"]
+    QD12 --> BMB["💧 Bombas de água"]
+    QD12 --> EXA["🌀 Exaustor de teto"]
+
+    INV --> TOM["🔌 Tomadas internas 110V"]
+
+    classDef fonte fill:#fff3cd,stroke:#a80
+    classDef central fill:#d4edda,stroke:#283
+    classDef carga fill:#e2e3ff,stroke:#558
+    class SOL,ALT,SHO fonte
+    class BAT,QD12,INV central
+    class LED,BMB,EXA,TOM carga
+        </pre>
+      </div>
+    </article>
+
+    <article class="card">
+      <h2>4. Sistema de água</h2>
+      <p class="subtitle">Reservatórios externos sob o assoalho + bombas elétricas.</p>
+      <div class="diagram">
+        <pre class="mermaid">
+flowchart LR
+    RES1["💧 Reservatório<br/>água limpa<br/><i>(sob assoalho)</i>"] --> BMB1["⚡ Bomba elétrica 12V"]
+    BMB1 --> TOR["🚰 Torneira / cuba"]
+    TOR --> RES2["🪣 Reservatório<br/>água cinza<br/><i>(sob assoalho)</i>"]
+
+    classDef agua fill:#cce5ff,stroke:#369
+    classDef bomba fill:#fff3cd,stroke:#a80
+    classDef cuba fill:#e2e3ff,stroke:#558
+    class RES1,RES2 agua
+    class BMB1 bomba
+    class TOR cuba
+        </pre>
+      </div>
+    </article>
+
+    <article class="card">
+      <h2>5. Sequência de uso (rotina típica)</h2>
+      <p class="subtitle">Decisão de qual modo usar e ações associadas.</p>
+      <div class="diagram">
+        <pre class="mermaid">
+flowchart TD
+    INI{"Como vou usar<br/>o veículo?"}
+    INI -->|Cidade / dia a dia| CID["Modo cidade<br/>(bancos + porta-malas)"]
+    INI -->|Viagem / pernoite| VIA["Preparar modo cama"]
+
+    VIA --> P1["1. Tirar bagagem<br/>do caixote"]
+    P1 --> P2["2. Remover bancos<br/>traseiros bipartidos"]
+    P2 --> P3["3. Posicionar tábuas<br/>removíveis sobre corredor"]
+    P3 --> P4["4. Estender colchão<br/>(caixote + tábuas)"]
+    P4 --> P5["5. Cozinha disponível<br/>ao lado da cama"]
+
+    classDef start fill:#fff3cd,stroke:#a80
+    classDef cidade fill:#e8f4ff,stroke:#369
+    classDef cama fill:#fff4e1,stroke:#c80
+    class INI start
+    class CID cidade
+    class VIA,P1,P2,P3,P4,P5 cama
+        </pre>
+      </div>
+    </article>
+
+    <article class="card">
+      <h2>6. Próximos passos do projeto</h2>
+      <p class="subtitle">Ordem sugerida de execução.</p>
+      <div class="diagram">
+        <pre class="mermaid">
+flowchart TD
+    M1["📏 Medir interior<br/>real do Doblò"] --> M2["✏️ Planta baixa<br/>em escala<br/>(Planner 5D / SketchUp)"]
+    M2 --> M3["⚡ Dimensionar<br/>sistema elétrico"]
+    M2 --> M4["💧 Dimensionar<br/>reservatórios de água"]
+    M3 --> M5["📋 Lista de materiais"]
+    M4 --> M5
+    M5 --> M6["💰 Orçamento<br/>por etapa"]
+    M6 --> M7["🔨 Marcenaria<br/>(módulos cozinha + caixote)"]
+    M7 --> M8["🔌 Instalação elétrica<br/>+ hidráulica"]
+    M8 --> M9["📑 Documentação<br/>DETRAN<br/>(motor casa)"]
+        </pre>
+      </div>
+    </article>
+
+  </main>
+
+  <footer class="site-footer">
+    <p>Diagramas conceituais — para planta de execução, modelar com medidas reais no Planner 5D ou SketchUp.</p>
+  </footer>
+
+  <script type="module">
+    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: 'default',
+      flowchart: { curve: 'basis', padding: 20 },
+      themeVariables: {
+        fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
+        fontSize: '14px'
+      }
+    });
+  </script>
+</body>
+</html>
