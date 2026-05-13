@@ -63,11 +63,36 @@ function simular({ valorTotal, valorEntrada, parcelas }, db) {
 const form = document.getElementById('form-simulacao');
 const resultadoEl = document.getElementById('resultado');
 
+function formatarMoedaBR(valor) {
+  const digitos = valor.replace(/\D/g, '');
+  if (!digitos) return '';
+  const padded = digitos.padStart(3, '0');
+  const inteiro = padded.slice(0, -2).replace(/^0+/, '') || '0';
+  const decimal = padded.slice(-2);
+  const inteiroFmt = inteiro.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+  return `${inteiroFmt},${decimal}`;
+}
+
+function parseMoedaBR(valor) {
+  if (!valor) return NaN;
+  return parseFloat(valor.replace(/\./g, '').replace(',', '.'));
+}
+
+['valorTotal', 'valorEntrada'].forEach(id => {
+  const el = document.getElementById(id);
+  el.addEventListener('input', () => { el.value = formatarMoedaBR(el.value); });
+});
+
 form.addEventListener('submit', async (e) => {
   e.preventDefault();
-  const valorTotal = parseFloat(document.getElementById('valorTotal').value);
-  const valorEntrada = parseFloat(document.getElementById('valorEntrada').value);
+  const valorTotal = parseMoedaBR(document.getElementById('valorTotal').value);
+  const valorEntrada = parseMoedaBR(document.getElementById('valorEntrada').value);
   const parcelas = parseInt(document.getElementById('parcelas').value, 10);
+
+  if (isNaN(valorTotal) || isNaN(valorEntrada)) {
+    alert('Informe valor total e entrada.');
+    return;
+  }
 
   if (valorEntrada >= valorTotal) {
     alert('A entrada deve ser menor que o valor total do veículo.');
