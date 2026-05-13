@@ -1,6 +1,65 @@
 const formatBRL = (v) => v.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
 const formatPct = (v) => `${v.toFixed(2)}%`;
 
+const STORAGE_KEY = 'financiamento_taxas_v1';
+const DEFAULT_DB_URL = '/data/taxas.json';
+
+async function loadDB() {
+  const local = localStorage.getItem(STORAGE_KEY);
+  if (local) {
+    try { return JSON.parse(local); } catch { /* fallback */ }
+  }
+  const res = await fetch(DEFAULT_DB_URL);
+  return await res.json();
+}
+
+function calcularParcela(valorFinanciado, taxaMensalPct, parcelas) {
+  const i = taxaMensalPct / 100;
+  if (i === 0) return valorFinanciado / parcelas;
+  const fator = Math.pow(1 + i, parcelas);
+  return valorFinanciado * (i * fator) / (fator - 1);
+}
+
+function simular({ valorTotal, valorEntrada, parcelas }, db) {
+  const valorFinanciado = valorTotal - valorEntrada;
+  const percEntrada = (valorEntrada / valorTotal) * 100;
+
+  const resultados = db.bancos.map(b => {
+    const elegivel = parcelas <= b.prazoMaximo && percEntrada >= b.entradaMinima;
+    const parcela = calcularParcela(valorFinanciado, b.taxaMensal, parcelas);
+    const totalFinanciado = parcela * parcelas;
+    const totalGeral = totalFinanciado + valorEntrada;
+    const jurosPagos = totalFinanciado - valorFinanciado;
+    return {
+      id: b.id,
+      banco: b.banco,
+      taxaMensal: b.taxaMensal,
+      prazoMaximo: b.prazoMaximo,
+      entradaMinima: b.entradaMinima,
+      observacao: b.observacao,
+      elegivel,
+      motivoInelegivel: !elegivel
+        ? (parcelas > b.prazoMaximo ? `Prazo máximo é ${b.prazoMaximo}x` : `Entrada mínima é ${b.entradaMinima}%`)
+        : null,
+      parcela,
+      totalFinanciado,
+      totalGeral,
+      jurosPagos
+    };
+  });
+
+  const elegiveis = resultados.filter(r => r.elegivel).sort((a, b) => a.totalGeral - b.totalGeral);
+  const melhor = elegiveis[0] || null;
+
+  return {
+    valorTotal, valorEntrada, valorFinanciado, percEntrada, parcelas, melhor,
+    resultados: resultados.sort((a, b) => {
+      if (a.elegivel !== b.elegivel) return a.elegivel ? -1 : 1;
+      return a.totalGeral - b.totalGeral;
+    })
+  };
+}
+
 const form = document.getElementById('form-simulacao');
 const resultadoEl = document.getElementById('resultado');
 
@@ -16,16 +75,8 @@ form.addEventListener('submit', async (e) => {
   }
 
   try {
-    const res = await fetch('/api/simular', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ valorTotal, valorEntrada, parcelas })
-    });
-    if (!res.ok) {
-      const err = await res.json();
-      throw new Error(err.erro || 'Erro na simulação');
-    }
-    const data = await res.json();
+    const db = await loadDB();
+    const data = simular({ valorTotal, valorEntrada, parcelas }, db);
     renderizar(data);
   } catch (err) {
     resultadoEl.innerHTML = `<div class="card"><div class="alerta">${err.message}</div></div>`;
@@ -66,7 +117,7 @@ function renderizar(data) {
   html += `
     <div class="card">
       <h2>Comparação entre bancos</h2>
-      <div style="overflow-x:auto">
+      <div class="table-wrap">
         <table>
           <thead>
             <tr>
@@ -89,12 +140,12 @@ function renderizar(data) {
                     : `<span class="badge badge-ok">Aprovado</span>`);
               return `
                 <tr class="${cls}">
-                  <td><strong>${r.banco}</strong>${r.observacao ? `<br><small style="color:#6b7280">${r.observacao}</small>` : ''}</td>
-                  <td>${formatPct(r.taxaMensal)}</td>
-                  <td>${formatBRL(r.parcela)}</td>
-                  <td>${formatBRL(r.totalGeral)}</td>
-                  <td>${formatBRL(r.jurosPagos)}</td>
-                  <td>${status}</td>
+                  <td data-label="Banco"><strong>${r.banco}</strong>${r.observacao ? `<br><small style="color:#6b7280">${r.observacao}</small>` : ''}</td>
+                  <td data-label="Taxa a.m.">${formatPct(r.taxaMensal)}</td>
+                  <td data-label="Parcela">${formatBRL(r.parcela)}</td>
+                  <td data-label="Total a pagar">${formatBRL(r.totalGeral)}</td>
+                  <td data-label="Juros">${formatBRL(r.jurosPagos)}</td>
+                  <td data-label="Status">${status}</td>
                 </tr>
               `;
             }).join('')}

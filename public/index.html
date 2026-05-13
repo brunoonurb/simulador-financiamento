@@ -3,48 +3,37 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Simulador de Financiamento de Veículo</title>
+  <title>IDEIA-TEC — Projetos</title>
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <div class="container">
-    <header>
-      <h1>🚗 Simulador de Financiamento</h1>
-      <nav>
-        <a href="index.html" class="active">Simulador</a>
-        <a href="admin.html">Gerenciar Taxas</a>
-      </nav>
+  <main class="hub">
+    <header class="hero">
+      <h1>IDEIA-TEC</h1>
+      <p>Projetos pessoais — Bruno Pedroso</p>
     </header>
 
-    <div class="card">
-      <h2>Dados da simulação</h2>
-      <form id="form-simulacao">
-        <div class="form-grid">
-          <div>
-            <label>Valor total do veículo (R$)</label>
-            <input type="number" id="valorTotal" step="0.01" min="1" placeholder="Ex.: 80000" required>
-          </div>
-          <div>
-            <label>Valor de entrada (R$)</label>
-            <input type="number" id="valorEntrada" step="0.01" min="0" placeholder="Ex.: 20000" required>
-          </div>
-          <div>
-            <label>Número de parcelas</label>
-            <input type="number" id="parcelas" min="1" max="120" placeholder="Ex.: 48" required>
-          </div>
-        </div>
-        <div class="btn-row">
-          <button type="submit" class="btn-primary">Simular</button>
-          <button type="reset" class="btn-secondary">Limpar</button>
-        </div>
-      </form>
-    </div>
+    <section class="cards">
 
-    <div id="resultado"></div>
+      <a class="card-link financ" href="/financiamento/">
+        <div class="emoji">🚗</div>
+        <h2>Simulador de Financiamento</h2>
+        <p>Compare bancos, parcelas e juros para financiar um veículo. Tabela Price com taxas atualizadas (abril/2026).</p>
+        <span class="cta">Abrir simulador →</span>
+      </a>
 
-    <p class="fonte">Taxas baseadas em pesquisa de mercado (abril/2026). Valores aproximados — confirme com o banco.</p>
-  </div>
+      <a class="card-link motor" href="/motorhome/">
+        <div class="emoji">🚐</div>
+        <h2>Projeto Motorhome — FIAT Doblò 2015</h2>
+        <p>Conversão modular: cozinha à direita, sofá/cama à esquerda, modo cidade × modo viagem. Plantas, sistemas elétrico, água, gás e mais.</p>
+        <span class="cta">Ver projeto →</span>
+      </a>
 
-  <script src="app.js"></script>
+    </section>
+
+    <footer class="hub-footer">
+      <p>Implantado em Vercel · 100% client-side · responsivo para mobile</p>
+    </footer>
+  </main>
 </body>
 </html>

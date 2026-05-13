@@ -11,10 +11,15 @@
     <header>
       <h1>⚙️ Gerenciar Taxas</h1>
       <nav>
+        <a href="/">← Início</a>
         <a href="index.html">Simulador</a>
         <a href="admin.html" class="active">Gerenciar Taxas</a>
       </nav>
     </header>
+
+    <div class="alerta">
+      <strong>Persistência local:</strong> as alterações são salvas no seu navegador (localStorage). Não afetam outros visitantes nem os dados padrão do projeto.
+    </div>
 
     <div class="card">
       <h2 id="form-titulo">Adicionar banco</h2>
@@ -45,13 +50,14 @@
         <div class="btn-row">
           <button type="submit" class="btn-primary" id="btn-salvar">Salvar</button>
           <button type="button" class="btn-secondary" id="btn-cancelar" style="display:none">Cancelar</button>
+          <button type="button" class="btn-danger" id="btn-reset" style="margin-left:auto">Restaurar padrão</button>
         </div>
       </form>
     </div>
 
     <div class="card">
       <h2>Bancos cadastrados</h2>
-      <div style="overflow-x:auto">
+      <div class="table-wrap">
         <table>
           <thead>
             <tr>
